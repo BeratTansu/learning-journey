@@ -4,7 +4,8 @@ with open('todos.json', 'r') as dosya:
     veri = json.load(dosya)
 
 def gorev_ekle(y_baslik):  
-    yeni_gorev = {'id': len(veri) + 1, 'baslik': y_baslik, 'tamamlandi': False}
+    idler = [gorev['id'] for gorev in veri]
+    yeni_gorev = {'id': max(idler, default=0) + 1, 'baslik': y_baslik, 'tamamlandi': False}
     veri.append(yeni_gorev)
     with open('todos.json', 'w') as dosya:
         json.dump(veri, dosya, ensure_ascii=False, indent=2)
@@ -30,7 +31,16 @@ def gorev_tamamla(g_id):
             return
     print("Girilen id bulunamadı!")
         
-               
+def gorev_sil(g_id):
+    for gorev in veri:
+        if g_id == gorev['id']:
+            baslik = gorev['baslik']
+            veri.remove(gorev)
+            with open('todos.json', 'w') as dosya:
+                json.dump(veri, dosya, ensure_ascii=False, indent=2)
+            print(f"\n'{baslik}' silindi!")
+            return
+    print("Girilen id'ye sahip görev bulunamadı!")
         
 while True:
     print("\n=== TODO UYGULAMASI ===")
@@ -49,6 +59,9 @@ while True:
     elif inp == 3:
         g_id = int(input("Tamamlamak istediğiniz görevin idsini giriniz: "))
         gorev_tamamla(g_id)
+    elif inp == 4:
+        g_id = int(input("Silmek istediğiniz görevin idsini giriniz: "))
+        gorev_sil(g_id)
     elif inp == 5:
         print("\nGörüşürüz!")
         break
