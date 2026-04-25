@@ -1,7 +1,17 @@
 import json
+import os
 
-with open('todos.json', 'r') as dosya:
-    veri = json.load(dosya)
+veri = []
+
+try:
+    with open('todos.json', 'r') as dosya:
+        veri = json.load(dosya)
+except FileNotFoundError:
+    print("Hata: Dosya Bulunamadı! Boş listeyle başlanıyor")
+except json.JSONDecodeError:
+    print("Hata: Dosya içeriği geçerli bir JSON formatında değil.")
+    os.rename('todos.json', 'yedek.json.bozuk')
+    print("Hata: Bozuk dosya yedeklendi! Boş listeyle başlanıyor...")
 
 def gorev_ekle(y_baslik):  
     idler = [gorev['id'] for gorev in veri]
@@ -41,7 +51,14 @@ def gorev_sil(g_id):
             print(f"\n'{baslik}' silindi!")
             return
     print("Girilen id'ye sahip görev bulunamadı!")
-        
+    
+def id_al(mesaj):
+    while True:
+        try:
+            return int(input(mesaj))
+        except ValueError:
+            print("Geçerli bir sayı girin!")
+            
 while True:
     print("\n=== TODO UYGULAMASI ===")
     print("1. Görev Ekle")
@@ -49,7 +66,11 @@ while True:
     print("3. Görevi Tamamla")
     print("4. Görevi Sil")
     print("5. Çıkış")
-    inp = int(input("Seçiminiz: "))
+    try:
+        inp = int(input("Seçiminiz: "))
+    except ValueError:
+        print("Hata: Lütfen geçerli bir sayı giriniz!")
+        continue
     
     if inp == 1:
         y_baslik = input("Yeni eklenecek olan görev için bir başlık giriniz: ")
@@ -57,10 +78,18 @@ while True:
     elif inp == 2:
         gorev_listele()
     elif inp == 3:
-        g_id = int(input("Tamamlamak istediğiniz görevin idsini giriniz: "))
-        gorev_tamamla(g_id)
+        try:
+            g_id = int(input("Tamamlamak istediğiniz görevin idsini giriniz: "))
+        except ValueError:
+            print("Hata: Lütfen geçerli bir sayı giriniz!")
+            continue
+        gorev_tamamla(g_id) 
     elif inp == 4:
-        g_id = int(input("Silmek istediğiniz görevin idsini giriniz: "))
+        try:
+            g_id = int(input("Silmek istediğiniz görevin idsini giriniz: "))
+        except ValueError:
+            print("Hata: Lütfen geçerli bir sayı giriniz!")
+            continue
         gorev_sil(g_id)
     elif inp == 5:
         print("\nGörüşürüz!")
