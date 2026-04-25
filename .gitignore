@@ -1,18 +1,22 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-venv/
-.venv/
-.env
+# Test ve runtime data
+todos.json              
+*.bozuk                 
+*.backup                
 
-# VSCode
-.vscode/
+# Python
+__pycache__/            
+*.pyc                   
+.venv/                  
+venv/
+
+# Editor
+.vscode/                
+.idea/                  
+*.swp                   
 
 # OS
-.DS_Store
-Thumbs.db
+.DS_Store               
+Thumbs.db               
 
-# Logs
-*.log
+# Environment
+.env                    
