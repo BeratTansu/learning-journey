@@ -18,7 +18,7 @@ A 10-week transformation journey. As a third-year software engineering student, 
 - Git & GitHub
 - WSL2 (Ubuntu 24)
 
-## 💡 Felsefe
+## 💡 Philosophy
 > "Moving from learning to doing."
 > AI is just a tool; I'll be the one writing the code.
 
